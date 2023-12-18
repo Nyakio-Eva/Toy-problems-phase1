@@ -5,6 +5,7 @@ Eva Nyakio
 ## Running Instructions
 1. Ensure node is installed
 2. To run a file use node filename.js
+3. enter student marks as prompted
 
 ## More Information about the project
 1. ### Student Grade Generator 
@@ -31,6 +32,9 @@ This program requests a user to input student marks, within a range of 0 to 100.
 8. Display the grade to the user
 
 2. ## Speed Detector 
+#### Running instructions:
+- Run the program in browser from htm file
+- enter the speed of car as prompted.
 #### Introduction
 This program takes the speed of car as input from user and checks if its above the speed limit. Then it calculates demerit points for speed above limit, and if the demerit points are above 12 it tells the user their license has been suspended!
 #### Human statements
@@ -43,7 +47,7 @@ This program takes the speed of car as input from user and checks if its above t
 7. One demerit point is equal to 5km/hr
 8. for more than 12 points the output should be 'License suspended!'
 
-### Pseudo code
+#### Pseudo code
 - Function name to check the speed of car- function checkCarSpeed()
 - The function checks the speed of car and calculates the demerit points
 - The function has one parameter; speed
@@ -62,3 +66,26 @@ This program takes the speed of car as input from user and checks if its above t
 - call the checkCarSpeed() function passing in carspeed as the argument.
 
 
+3. ### Net Salary Calculator
+#### Introduction
+This program calculates the user's net salary with basic salary benefits and payee inputs.
+
+#### Running instructions:
+- Run the program in the browser
+- enter basic salary and benefits when prompted
+#### Human statements
+- calculator that gives each individual's net salary by taking in the inputs unique to each user
+- Net salary is calculated by subtracting Gross salary and deductions
+- Gross salary is the basic salary + benefits(allowances,bonus,compesations)
+- deductions include tax, NHIF, NSSF
+- Tax = paye according to rates from 1 July 2023, are available in the links provided together with NHIF and NSSF.
+
+#### Pseudo Code
+1. Ask the user to enter their basic salary
+2. Ask the user to enter their benefits
+3. Calculate the gross salary - basic salary + benefits using function calculatesGrossSalary(), basicsalary and benefits as parameters
+4. Calculate paye by defining the tax brackets and rates using a function- function calculatesPaye(), grosssalary parameter,for loop,
+5. Calculate NHIF deduction based on the gross salary using function calculateNHIF(grosssalary)
+6. Calculate NSSF deduction also based on gross salary using function calculateNSSF(grosssalary)
+7. Calculate the Net salary - Gross salary - deductions using function calculateNetSalary(basic salary,benefits)
+8.
