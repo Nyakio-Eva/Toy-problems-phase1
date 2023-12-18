@@ -86,6 +86,6 @@ This program calculates the user's net salary with basic salary benefits and pay
 3. Calculate the gross salary - basic salary + benefits using function calculatesGrossSalary(), basicsalary and benefits as parameters
 4. Calculate paye by defining the tax brackets and rates using a function- function calculatesPaye(), grossSalary parameter,for loop,Array
 5. Calculate NHIF deduction based on the gross salary using function calculateNHIF(grosssalary)
-6. Calculate NSSF deduction also based on gross salary using function calculateNSSF(grosssalary,nssfRate)
+6. Calculate NSSF deduction also based on gross salary using function calculateNSSF(grosssalary)
 7. Calculate the Net salary - Gross salary - deductions using function calculateNetSalary(basic salary,benefits)
 8.

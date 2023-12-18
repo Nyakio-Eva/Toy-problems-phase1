@@ -30,7 +30,7 @@ function calculateNHIF(grossSalary){
 
 }
 // function that calculates NSSF deductions
-function calculateNSSF(grossSalary,nssfRate){
+function calculateNSSF(grossSalary){
 //nssf contribution limits
  const tier2lowerlimit = 6001;
  const tier2limit = 18000;
