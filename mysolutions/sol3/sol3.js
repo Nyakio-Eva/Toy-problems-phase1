@@ -1,60 +1,97 @@
-//function to calculate gross salary
-function calculateGrossSalary(basicsalary,benefits){
-    return basicsalary + benefits;
-}
-//function to calculate PAYE(Tax)
-function calculatePaye(grossSalary){
-    //the tax brackets and rates as of July 2023
-    const taxBrackets = [24000,32333,500000,800000];
-    const taxRates = [10,25,30,35];
 
-    let tax = 0;
+//function to calculate PAYE
+//defining PAYE values
+const payeBrackets = [24000,32333,500000,800000];
+const payeRates = [0.1,0.25,0.3,0.325,0.35];
 
-    for(let i = 0; i < taxBrackets.length; i++){
-        if (grossSalary > taxBrackets[i]){
-            tax += (grossSalary - taxBrackets[i]) * taxRates[i];
-            grossSalary = taxBrackets[i];
+function calculatePayee(grossSalary){
+    for(let i = 0; i < payeBrackets.length; i++){
+        if(grossSalary <= payeBrackets[i]){
+            return grossSalary * payeRates[i];
         }
     }
-    return tax;
+    // If the grossSalary is above the highest bracket, use the highest rate
+    return grossSalary * payeRates[payeRates.length - 1];
 }
-// function to calculate NHIF Deductions
-function calculateNHIF(grossSalary){
-    //NHIF rates according to gross salary
-    const nhifRates= [150,300,400,500,600,750,850,900,950,1000,1100,1200,1300,
-    1400,1500,1600,1700];
-    //getting the nhif idex based on grossSalary using Math.ceil, since nhif rates change every time gross salary is 5000.
-    const index = Math.ceil(grossSalary/5000) - 1 ;
-    //returning the NHIF deduction using Math.min for the upper limit to ensure the index is within the nhif rates array
-    return Math.min(nhifRates[index], 1700);
 
+//function to calculate NHIF deductions
+//defining NHIF values
+const nhifBrackets = [5999, 7999, 11999, 14999, 19999, 24999, 29999, 34999, 39999, 44999, 49999, 59999, 69999, 79999, 89999, 99999];
+const nhifDeductions = [150, 300, 400, 500, 600, 750, 850, 900, 950, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700];
+
+function calculateNHIF(grossSalary){
+    for(let i = 0; i < nhifBrackets.length; i++){
+        if (grossSalary <= nhifBrackets[i]){
+            return nhifDeductions[i];
+        }
+    }
+    //if grosssalary is above the highest bracket, use the highest deduction
+    return nhifDeductions[nhifDeductions.length - 1];
 }
-// function that calculates NSSF deductions
+
+//function to calculate NSSF deductions
+//defining NSSF values
+const nssfBrackets = [6000,18000];
+const nssfRate = 0.06; // both the employer and employee contribute 6%
+
 function calculateNSSF(grossSalary){
-//nssf contribution limits
- const tier2lowerlimit = 6001;
- const tier2limit = 18000;
-//nssf contribution based on gross salart and rates
- const nssfRate = 0.06;
-  if(grossSalary <= tier2lowerlimit){
-    return grossSalary * nssfRate;
- }
-  else if(grossSalary <= tier2limit){
-    return tier2limit * nssfRate;
- }
-  else{
-    return (grossSalary - tier2limit) * nssfRate;
- }
+    let nssfDeduction = 0;
+    //determining the tier based on grossSalary
+    if(grossSalary <= nssfBrackets[0]){
+        nssfDeduction = grossSalary * nssfRate;
+    }
+    else if(grossSalary <= nssfBrackets[1]){
+        nssfDeduction = nssfBrackets[0] * nssfRate; //deduct 6% from the first bracket
+    }
+    else{
+        nssfDeduction = nssfBrackets[1] * nssfRate; //deduct 6% from the second bracket
+    }
+    return nssfDeduction;
 }
-// function to calculate net salary
-function calculateNetSalary(basicsalary,benefits){
-    const grossSalary = calculateGrossSalary(basicsalary, benefits);
-    const tax = calculatePaye(grossSalary);
-    const nhif = calculateNHIF(grossSalary);
-    const nssf = calculateNSSF(grossSalary);
-    return grossSalary - tax - nhif - nssf;
+
+
+//function to calculate net salary
+function calculateNetSalary(grossSalary,allDeductions){
+    
+ document.getElementById("calculateButton").addEventListener("click", function() {
+
+    // Get the user's input on their gross salary
+    const grossSalaryInput = document.getElementById("grossSalary");
+    const grossSalary = parseFloat(grossSalaryInput.value);
+
+    // Check if the input is a valid number
+    if (isNaN(grossSalary)) {
+        // Display an error message if the input is not a valid number
+        alert("Please enter a valid number for gross salary.");
+    } else {
+        // Calculate deductions and net salary
+        const payee = calculatePayee(grossSalary);
+        const nhif = calculateNHIF(grossSalary);
+        const nssf = calculateNSSF(grossSalary);
+        const allDeductions = payee + nhif + nssf;
+
+        // Calculate net salary
+        const netSalary = calculateNetSalary(grossSalary,allDeductions);
+
+        // Display the results in the container
+        const resultContainer = document.getElementById("resultcontainer");
+        resultContainer.innerHTML = `
+            <p>Monthly Gross Salary: ${grossSalary}</p>
+            <p>Benefits(NSSF contribution): ${nssf}</p>
+            <p>PAYE(tax): ${payee}</p>
+            <p>NHIF: ${nhif}</p>
+            <p>Total Deductions: ${allDeductions}</p>
+            <p>Net Salary: ${netSalary}</p>
+        `;
+    }
+  });
+  return grossSalary - allDeductions;
 }
-//when running the program
-const basicsalary = parseFloat(prompt("Enter your basic salary:"));
-const benefits = parseFloat(prompt("Enter your benefits"));
-const netsalary = calculateNetSalary(basicsalary,benefits);
+     
+
+        
+
+
+    
+       
+
